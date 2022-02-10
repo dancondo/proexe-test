@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { UserCreators, UserIdBasedAction, UserTypes } from 'store/users/users.actions';
 import { getUser, getUsers } from 'store/users/users.services';
 import getErrorMessage from 'utils/get-error-message';
@@ -19,7 +19,18 @@ export function* getUserDetailsSaga(action: SagaAction<UserIdBasedAction>) {
     const user: UserDto = yield call(getUser, action.userId)
     yield put(UserCreators.successGetUserDetails(user))
   } catch (err: any) {
-    yield put(UserCreators.failedRequest(getErrorMessage(err)))
+    if (err?.response?.status === 404) {
+      const localUsers: UserDto[] = yield select(state => state.users.users)
+      const localUser = localUsers.find(local => local.id === +action.userId)
+
+      if (!localUser) {
+        yield put(UserCreators.failedRequest(getErrorMessage(err)))
+      }
+
+      yield put(UserCreators.successGetUserDetails(localUser))
+    } else {
+      yield put(UserCreators.failedRequest(getErrorMessage(err)))
+    }
   }
 }
 
