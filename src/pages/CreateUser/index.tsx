@@ -25,7 +25,7 @@ const CreateUserPage: React.FC = () => {
         title: 'User Created',
         message: 'A new user was added to the list!',
       }))
-      navigate('/users')
+      navigate('/')
     } catch (err: any) {
       dispatch(NotificationCreators.showNotification({
         timeout: 5000,
@@ -40,7 +40,7 @@ const CreateUserPage: React.FC = () => {
   }
 
   const onCancel = () => {
-    navigate('/users')
+    navigate('/')
   }
 
   return (

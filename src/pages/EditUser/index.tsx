@@ -38,7 +38,7 @@ const EditUserPage: React.FC = () => {
         title: 'User Updated',
         message: `User #${userId} was updated successfully!`,
       }))
-      navigate('/users')
+      navigate('/')
     } catch (err: any) {
       dispatch(NotificationCreators.showNotification({
         timeout: 5000,
@@ -53,7 +53,7 @@ const EditUserPage: React.FC = () => {
   }
 
   const onCancel = () => {
-    navigate('/users')
+    navigate('/')
   }
 
   return (
