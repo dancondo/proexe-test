@@ -22,7 +22,9 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "test": "react-scripts test",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "npm run lint -- --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
