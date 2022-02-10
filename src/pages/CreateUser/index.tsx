@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import UsersLayout from 'layouts/UsersLayout';
 import { createUser } from 'store/users/users.services';
 import { NotificationCreators } from 'store/notifications/notifications.actions';
+import getErrorMessage from 'utils/get-error-message';
 
 const CreateUserPage: React.FC = () => {
   const navigate = useNavigate()
@@ -25,12 +26,12 @@ const CreateUserPage: React.FC = () => {
         message: 'A new user was added to the list!',
       }))
       navigate('/users')
-    } catch (err) {
+    } catch (err: any) {
       dispatch(NotificationCreators.showNotification({
-        message: err,
         timeout: 5000,
         type: 'danger',
         title: 'Create user error!',
+        message: getErrorMessage(err),
       }))
     } finally {
       setLoading(false)

@@ -1,6 +1,6 @@
+import BaseButton from 'components/Base/Button';
 import BaseModal from 'components/Base/Modal';
 import Panel from 'components/Base/Panel';
-import UserForm from 'components/Users/Form';
 import UsersList from 'components/Users/List';
 import { useAppDispatch, useAppSelector } from 'hooks/state.hooks';
 import UsersLayout from 'layouts/UsersLayout';
@@ -10,9 +10,11 @@ import { Link } from 'react-router-dom';
 import { NotificationCreators } from 'store/notifications/notifications.actions';
 import { UserCreators } from 'store/users/users.actions';
 import { deleteUser } from 'store/users/users.services';
+import getErrorMessage from 'utils/get-error-message';
 
 const UsersPage: React.FC = () => {
   const dispatch = useAppDispatch()
+  const [deleting, setDeleting] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState(0)
   const { fetched, users, loading, error } = useAppSelector(state => state.users)
@@ -40,6 +42,7 @@ const UsersPage: React.FC = () => {
   const onDelete = async () => {
     if (selectedUserId) {
       try {
+        setDeleting(true)
         await deleteUser(selectedUserId)
         dispatch(UserCreators.deleteUser(selectedUserId))
         dispatch(NotificationCreators.showNotification({
@@ -48,10 +51,17 @@ const UsersPage: React.FC = () => {
           title: 'User Deleted',
           message: `User #${selectedUserId} was deleted successfully!`,
         }))
-      } catch (err) {
-
+      } catch (err: any) {
+        dispatch(NotificationCreators.showNotification({
+          timeout: 5000,
+          type: 'danger',
+          title: 'Delete user error!',
+          message: getErrorMessage(err),
+        }))
       } finally {
         closeDeleteModal()
+        setDeleting(false)
+        setSelectedUserId(0)
       }
 
     }
@@ -162,18 +172,19 @@ const UsersPage: React.FC = () => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button
+          <BaseButton
             variant="secondary"
             onClick={closeDeleteModal}
           >
             Cancel
-          </Button>
-          <Button
+          </BaseButton>
+          <BaseButton
             variant="danger"
             onClick={onDelete}
+            loading={deleting}
           >
             Delete
-          </Button>
+          </BaseButton>
         </Modal.Footer>
       </BaseModal>
     </UsersLayout>

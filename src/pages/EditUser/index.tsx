@@ -8,6 +8,7 @@ import UsersLayout from 'layouts/UsersLayout';
 import { updateUser } from 'store/users/users.services';
 import { NotificationCreators } from 'store/notifications/notifications.actions';
 import Panel from 'components/Base/Panel';
+import getErrorMessage from 'utils/get-error-message';
 
 const EditUserPage: React.FC = () => {
   const navigate = useNavigate()
@@ -38,12 +39,12 @@ const EditUserPage: React.FC = () => {
         message: `User #${userId} was updated successfully!`,
       }))
       navigate('/users')
-    } catch (err) {
+    } catch (err: any) {
       dispatch(NotificationCreators.showNotification({
-        message: err,
         timeout: 5000,
         type: 'danger',
         title: 'Edit user error!',
+        message: getErrorMessage(err),
       }))
     } finally {
       setLoading(false)
