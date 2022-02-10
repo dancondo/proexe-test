@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import BaseButton from '../Button';
 
 interface FormProps {
@@ -67,12 +67,12 @@ const BaseForm: React.FC<FormProps> = ({
                 <Row
                   className="g-0"
                 >
-                  <Button
+                  <BaseButton
                     variant="outline-danger"
                     onClick={onCancel}
                   >
                     Cancel
-                  </Button>
+                  </BaseButton>
                 </Row>
               </Col>
             )

@@ -1,7 +1,6 @@
 import BaseForm from 'components/Base/Form';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
 import isEmail from 'utils/is-email';
 
 interface UserFormProps {
