@@ -8,8 +8,8 @@ export const getUsers = async (): Promise<UserDto[]> => {
 }
 
 export const getUser = async (userId: number): Promise<UserDto> => {
-  const { data } = await axios.get(`${USERS_API_BASE_URL}/${userId}`)
-  return data
+  const res = await axios.get(`${USERS_API_BASE_URL}/${userId}`)
+  return res.data
 }
 
 export const createUser = async (userDto: UpsertUserDto): Promise<UserDto> => {
@@ -21,15 +21,25 @@ export const createUser = async (userDto: UpsertUserDto): Promise<UserDto> => {
   }
 }
 
-export const updateUser = async(userId: number, user: Partial<UserDto>): Promise<UserDto> => {
-  const { data } = await axios.put(`${USERS_API_BASE_URL}/${userId}`, { user })
-  return {
-    id: data.id,
-    ...data.user
+export const updateUser = async (userId: number, user: Partial<UserDto>): Promise<UserDto> => {
+  try {
+    const { data } = await axios.put(`${USERS_API_BASE_URL}/${userId}`, { user })
+    return {
+      id: data.id,
+      ...data.user
+    }
+  } catch (err: any) {
+    if (err?.response?.status === 404) {
+      return {
+        ...user,
+        id: userId,
+      } as UserDto
+    }
+    throw err
   }
 }
 
-export const deleteUser = async(userId: number): Promise<void> => {
+export const deleteUser = async (userId: number): Promise<void> => {
   try {
     await axios.delete(`${USERS_API_BASE_URL}/${userId}`)
   } catch (err: any) {
