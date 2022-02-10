@@ -30,5 +30,12 @@ export const updateUser = async(userId: number, user: Partial<UserDto>): Promise
 }
 
 export const deleteUser = async(userId: number): Promise<void> => {
-  return await axios.delete(`${USERS_API_BASE_URL}/${userId}`)
+  try {
+    await axios.delete(`${USERS_API_BASE_URL}/${userId}`)
+  } catch (err: any) {
+    if (err?.response?.status === 404) {
+      return
+    }
+    throw err
+  }
 }
