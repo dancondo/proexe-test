@@ -25,6 +25,7 @@ export function* getUserDetailsSaga(action: SagaAction<UserIdBasedAction>) {
 
       if (!localUser) {
         yield put(UserCreators.failedRequest(getErrorMessage(err)))
+        return
       }
 
       yield put(UserCreators.successGetUserDetails(localUser))
