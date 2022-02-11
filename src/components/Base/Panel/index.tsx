@@ -1,8 +1,10 @@
 import React from 'react'
-import { Card, Row } from 'react-bootstrap'
+import { Card, CardProps, Row } from 'react-bootstrap'
 
-const Panel: React.FC = ({ children }) => (
-  <Card>
+const Panel: React.FC<CardProps> = ({ children, ...props }) => (
+  <Card
+    {...props}
+  >
     <Card.Body
       className="py-5 px-5"
     >
