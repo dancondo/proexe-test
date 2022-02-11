@@ -6,14 +6,11 @@ const Header: React.FC = () => (
   <Navbar
     bg="dark"
     variant="dark"
+    data-testid="nav"
   >
     <Container>
       <Navbar.Brand>
-        <Link
-          to="/users"
-        >
-          Proexe Test
-        </Link>
+        Proexe Test
       </Navbar.Brand>
     </Container>
   </Navbar>

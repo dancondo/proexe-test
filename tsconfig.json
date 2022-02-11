@@ -25,10 +25,11 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
   ],
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
   ]
 }

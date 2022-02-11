@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap';
 
 interface BaseModalProps {
   title: string;
-  show: boolean;
+  show?: boolean;
   onClose: () => void;
 }
 
@@ -21,6 +21,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
     <Modal
       show={show}
       onHide={onClose}
+      data-testid="base-modal"
     >
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
