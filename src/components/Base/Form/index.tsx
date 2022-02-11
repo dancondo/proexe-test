@@ -28,6 +28,7 @@ const BaseForm: React.FC<FormProps> = ({
   return (
     <Form
       onSubmit={onClick}
+      data-testid="base-form"
     >
       {
         fields.map((field: FormField) => (
